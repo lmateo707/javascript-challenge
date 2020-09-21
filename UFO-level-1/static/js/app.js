@@ -12,6 +12,8 @@ filterEntries.on("click", function() {
 
     // code to prevent the page from refreshing
     d3.event.preventDefault();
+    var filteredData = tableData.map(x => x)
+    // var filteredData = [...tableData]
 
     // get the key element: #datetime, #city, #state, #country, #shape, #comments
     var datetimeKey = d3.select("#datetime");
@@ -32,44 +34,44 @@ filterEntries.on("click", function() {
 
     // create if statements to use for multiple filters
     if (datetimeValue != ""){
-        tableData = tableData.filter(entry => entry.datetime === datetimeValue);
+        filteredData = filteredData.filter(entry => entry.datetime === datetimeValue);
     }
     if (cityValue != ""){
-        tableData = tableData.filter(entry => entry.city === cityValue);
+        filteredData = filteredData.filter(entry => entry.city === cityValue);
     }
     if (stateValue != ""){
-        tableData = tableData.filter(entry => entry.state === stateValue);
+        filteredData = filteredData.filter(entry => entry.state === stateValue);
     }
     if (countryValue != ""){
-        tableData = tableData.filter(entry => entry.country === countryValue);
+        filteredData = filteredData.filter(entry => entry.country === countryValue);
     }
     if (shapeValue != ""){
-        tableData = tableData.filter(entry => entry.shape === shapeValue);
+        filteredData = filteredData.filter(entry => entry.shape === shapeValue);
     }
     if (commentsValue != ""){
-        tableData = tableData.filter(entry => entry.comment === commentsValue);
+        filteredData = filteredData.filter(entry => entry.comment === commentsValue);
     }
 
     
-    console.log(tableData);
-    renderTable();
+    console.log(filteredData);
+    renderTable(filteredData);
 
 
 });
 
 // create renderTable so that the table shows up
-renderTable();
+renderTable(tableData);
 
 // Create loop through all data to show everything in the filtered data
-function renderTable(){
-    
-    console.log(tableData);
-    tableData.forEach(function(ufoSightings) {
-        console.log(ufoSightings);
+function renderTable(array){
+    tbody.html("")
+    // console.log(renderTable);
+    array.forEach(function(ufoSightings) {
+        // console.log(ufoSightings);
         var row = tbody.append("tr");
         Object.entries(ufoSightings).forEach(function([key, value]) {
-            console.log(key,value);
-            var cell = tbody.append("td");
+            // console.log(key,value);
+            var cell = row.append("td");
             cell.text(value);
 
         });
